@@ -1,0 +1,31 @@
+html {box-sizing:border-box;}
+*, *:after, *:before {box-sizing:inherit;}
+
+html, body {
+  height:100%;
+}
+
+#content {
+  height:100%;
+  padding-left:256px;
+
+  #input {
+    background:#333;
+    position:fixed;
+    bottom:0;
+    right:0;
+    left:256px;
+    height:40px;
+    border-top:3px solid #333;
+    padding-left:10px;
+  }
+
+  #userInput {
+    width:600px;
+  }
+
+  ul {
+    padding-left:0;
+    margin-left:10px;
+  }
+}

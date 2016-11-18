@@ -3,6 +3,9 @@ import path from 'path'
 import chalk from 'chalk'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
+import http from 'http'
+import socketio from 'socket.io'
+import chat from './chat'
 
 export default function (config) {
   const app = express()
@@ -16,7 +19,12 @@ export default function (config) {
     res.sendFile(path.resolve('./dist/index.html'))
   })
 
-  app.listen(config.port, config.hostname, function () {
+  const server = http.Server(app)
+  const io = socketio(server)
+
+  chat(io)
+
+  server.listen(config.port, config.hostname, function () {
     console.log(chalk.cyan('Server Listening on port: ') + config.port)
   })
 }

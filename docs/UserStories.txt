@@ -1,0 +1,34 @@
+MVP
+Users can chat in a chat room
+Users can login/logout
+Users can create their own username
+Users can see who is in a room
+Users can see timestamps on messages
+
+Nice to Have
+Users can create/join other rooms
+Users can have a profile
+Users can have a profile picture
+Users can customize my fonts
+Users can send private messages
+Users can react to specific messages
+Users can bookmark messages
+Users can receive notifications
+Users can tag other users (@)
+Users can have a friends list
+Users can have the ability to invite people to channel
+Users can send commands to bot
+
+Future Features
+Users can customize their statuses (away, hibernating, available, out of town)
+Users can post updates (docs, informal updates, etc.) quickly
+Users can subscribe to updates
+Users can send picutres
+Users can filter messages
+Users can archive old messages
+Users can create reminders for events through messages
+Room highlights when something interesting happens
+Users can be able to call someone
+Users can have different themes
+Users can block other users
+Users can send money to eachother
