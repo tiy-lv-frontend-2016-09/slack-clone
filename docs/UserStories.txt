@@ -7,10 +7,10 @@ Users can see timestamps on messages
 
 Nice to Have
 Users can create/join other rooms
+Users can send private messages
+Users can customize my fonts
 Users can have a profile
 Users can have a profile picture
-Users can customize my fonts
-Users can send private messages
 Users can react to specific messages
 Users can bookmark messages
 Users can receive notifications

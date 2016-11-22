@@ -1,30 +1,51 @@
 import React from 'react'
 import Drawer from 'material-ui/Drawer'
-import AppBar from 'material-ui/AppBar'
 import RaisedButton from 'material-ui/RaisedButton'
-import LoginButton from 'components/LoginButton'
-import LoginMenu from 'components/LoginMenu'
 import store from 'store'
-import { addMessage } from 'api/messages'
+import { addMessage, isTyping, joinChat, leaveChat } from 'api/messages'
+import moment from 'moment'
+import { List, ListItem } from 'material-ui/List'
+import Subheader from 'material-ui/Subheader';
+import Avatar from 'material-ui/Avatar'
+
 
 const ChatContainer = React.createClass({
   getInitialState: function () {
     return {
       logged: false,
-      messages: []
+      messages: [],
+      typing: false,
+      users: []
     }
   },
   componentWillMount: function () {
     this.unsubscribe = store.subscribe(() => {
-      const appState = store.getState()
-      this.setState({
-        logged: appState.logged,
-        messages: appState.messages
-      })
+      this.updateMessages()
+    })
+    this.update = setInterval(()=>{
+      this.updateMessages()
+    }, 1000)
+    joinChat()
+  },
+  updateMessages: function() {
+    const appState = store.getState()
+    this.setState({
+      logged: appState.logged,
+      messages: appState.messages.map(msg=>{
+        return {
+          username:msg.username,
+          message:msg.message,
+          timestamp:moment(msg.timestamp).fromNow()
+        }
+      }),
+      typing: appState.typing,
+      users: appState.users
     })
   },
   componentWillUnmount: function () {
     this.unsubscribe()
+    clearInterval(this.update)
+    leaveChat()
   },
   render: function () {
     return (
@@ -34,19 +55,22 @@ const ChatContainer = React.createClass({
 })
 
 const Chat = React.createClass({
-  getDefaultProps: function () {
-    return {
-      messages: []
-    }
-  },
   getInitialState: function () {
     return {
       userInput: ''
     }
   },
   handleChange: function (e) {
+    var val = e.target.value
+
+    if (val !== '') {
+      isTyping(true)
+    } else {
+      isTyping(false)
+    }
+
     this.setState({
-      userInput: e.target.value
+      userInput: val
     })
   },
   handleSubmit: function (e) {
@@ -57,24 +81,31 @@ const Chat = React.createClass({
     this.setState({
       userInput: ''
     })
+    isTyping(false)
   },
   render: function () {
     return (
       <div id='container'>
-        <AppBar
-          style={{zIndex: 11000}}
-          showMenuIconButton={false}
-          iconElementRight={this.props.logged ? <LoginMenu /> : <LoginButton />}
-        />
-        <Drawer open />
+        <Drawer open={true}>
+          <List>
+            <Subheader>Chat Users</Subheader>
+            {this.props.users.map((user, i) => (
+              <ListItem key={'user' + i}
+                primaryText={user.username}
+                leftAvatar={<Avatar>{user.username.charAt(0).toUpperCase()}</Avatar>}
+              />
+            ))}
+          </List>
+        </Drawer>
         <div id='content'>
           <ul>
             {this.props.messages.map((msg,i) => (
               <li key={'message-' + i}>
-                {msg.message}
+                {msg.username}: {msg.message} <span style={{color:'#ccc'}}>{msg.timestamp}</span>
               </li>
             ))}
           </ul>
+          {this.props.typing ? <span style={{color:'#ccc'}}>Someone is Typing</span> : ''}
           <div id='input'>
             <form onSubmit={this.handleSubmit}>
               <input autoComplete="off" onChange={this.handleChange} type='text' id='userInput' value={this.state.userInput} />

@@ -2,7 +2,9 @@ import * as actions from 'actions'
 
 const defaultState = {
   logged: false,
-  messages: []
+  messages: [],
+  typing: false,
+  users: []
 }
 
 export default function (state = defaultState, action) {
@@ -11,6 +13,10 @@ export default function (state = defaultState, action) {
       return {...state, messages: [...state.messages, action.message]}
     case actions.LOGIN:
       return {...state, logged: true}
+    case actions.IS_TYPING:
+      return {...state, typing: action.typing}
+    case actions.USER_LIST_UPDATE:
+      return {...state, users: action.users}
     default:
       return state
   }

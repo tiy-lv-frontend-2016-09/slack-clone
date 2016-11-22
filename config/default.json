@@ -1,5 +1,12 @@
 {
   "server": {
     "port": 8000
-  }
+  },
+  "db": {
+    "host":"localhost",
+    "user":"slack",
+    "password":"Zd2$(X])=r@YevaD",
+    "database":"slack"
+  },
+  "salt": ")M(]4!8grp*C-?N"
 }
