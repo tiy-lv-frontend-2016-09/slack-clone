@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import { browserHistory, Link } from 'react-router'
 import { createUser } from 'api/users'
+import {cyan500} from 'material-ui/styles/colors'
 
 import 'assets/styles/login.scss'
 
@@ -33,7 +34,7 @@ export default React.createClass({
             <TextField onChange={this.handleChange} id="username" value={this.state.username} hintText="Username" floatingLabelText="Username" /><br />
             <TextField onChange={this.handleChange} type="password" value={this.state.password} id="password" hintText="Password" floatingLabelText="Password" /><br />
             <br />
-            <RaisedButton type="submit" label="Register" />
+            <RaisedButton secondary={true} type="submit" label="Register" />
           </fieldset>
         </form>
       </div>

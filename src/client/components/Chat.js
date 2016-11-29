@@ -25,7 +25,7 @@ const ChatContainer = React.createClass({
     this.update = setInterval(()=>{
       this.updateMessages()
     }, 1000)
-    joinChat()
+    joinChat('foo')
   },
   updateMessages: function() {
     const appState = store.getState()
@@ -60,6 +60,9 @@ const Chat = React.createClass({
       userInput: ''
     }
   },
+  joinChat: function(e) {
+    joinChat(e.target.id)
+  },
   handleChange: function (e) {
     var val = e.target.value
 
@@ -87,6 +90,11 @@ const Chat = React.createClass({
     return (
       <div id='container'>
         <Drawer open={true}>
+          <ul>
+            <li><a onClick={this.joinChat} id='foo'>Foo Room</a></li>
+            <li><a onClick={this.joinChat} id='bar'>Bar Room</a></li>
+            <li><a onClick={this.joinChat} id='baz'>Baz Room</a></li>
+          </ul>
           <List>
             <Subheader>Chat Users</Subheader>
             {this.props.users.map((user, i) => (

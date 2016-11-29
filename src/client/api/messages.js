@@ -27,16 +27,28 @@ socket.on('users', function(users){
   })
 })
 
-export function joinChat() {
-  socket.emit('join', Cookies.get('username'))
+socket.on('initial messages', function(messages){
+  store.dispatch({
+    type: actions.INITIAL_MESSAGES,
+    messages: messages
+  })
+})
+
+export function joinChat(channel) {
+  socket.emit('join', {username: Cookies.get('username'), channel:channel})
 }
 
 export function addMessage (msg) {
   msg.timestamp = moment().format().toString()
   msg.username = Cookies.get('username')
+  msg.channel = 'foo'
   socket.emit('new message', msg)
 }
 
 export function isTyping(typing) {
+  typing = {
+    typing: typing,
+    channel: 'foo'
+  }
   socket.emit('typing', typing)
 }
